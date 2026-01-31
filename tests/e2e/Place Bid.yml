@@ -1,0 +1,22 @@
+info:
+  name: Place Bid
+  type: http
+  seq: 5
+
+http:
+  method: POST
+  url: http://localhost:8000/auctions/7eaa1699-28e6-4272-875f-21f47285141e/bids
+  body:
+    type: json
+    data: |-
+      {
+        "bidder_id": "user1",
+        "amount": 100
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

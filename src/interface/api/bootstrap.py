@@ -1,3 +1,5 @@
+import sqlite3
+
 from module.auction.application.event_handler import send_email_to_bidder, update_analytics
 from module.auction.application.query import GetAuctionQuery, ListAuctionsQuery, ListBidsQuery
 from module.auction.application.query_handler import (
@@ -7,6 +9,7 @@ from module.auction.application.query_handler import (
 )
 from module.auction.domain.event import BidPlaced
 from module.auction.infrastructure.sqlite_auction_read_repository import SQLiteAuctionReadRepository
+from module.auction.infrastructure.sqlite_auction_write_repository import SQLiteAuctionWriteRepository
 from shared.application.command_bus import CommandBus
 from shared.application.event_bus import EventBus
 from shared.application.query_bus import QueryBus
@@ -17,6 +20,11 @@ def bootstrap_dependencies(db_path: str = "auctions.db") -> tuple[EventBus, Comm
     Sets up the dependency injection container and wires the application.
     Returns the event, command, and query buses ready for use.
     """
+    # Ensure DB tables exist
+    with sqlite3.connect(db_path) as conn:
+        # Just instantiating the repo creates the table if it doesn't exist
+        SQLiteAuctionWriteRepository(conn)
+
     event_bus = EventBus()
     command_bus = CommandBus()
     query_bus = QueryBus()

@@ -65,7 +65,14 @@ class Router(BaseHTTPRequestHandler):
             # API Routes
             # GET /
             if parsed.path == "/":
-                status, data = 200, {"message": "Welcome to the Auction Service API"}
+                status, data = 200, {
+                    "message": "Welcome to the Auction Service API",
+                    "_links": {
+                        "self": {"href": "/", "method": "GET"},
+                        "auctions": {"href": "/auctions", "method": "GET"},
+                        "create_auction": {"href": "/auctions", "method": "POST"},
+                    },
+                }
 
             # GET /auctions
             elif parsed.path == "/auctions":

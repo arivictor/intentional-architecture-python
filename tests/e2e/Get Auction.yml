@@ -1,0 +1,15 @@
+info:
+  name: Get Auction
+  type: http
+  seq: 4
+
+http:
+  method: GET
+  url: http://localhost:8000/auctions/7eaa1699-28e6-4272-875f-21f47285141e
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
